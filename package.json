@@ -23,7 +23,9 @@
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "express-jwt-authz": "^2.4.1",
+    "ioredis": "^4.24.5",
     "jsonwebtoken": "^8.5.1",
-    "jwks-rsa": "^2.0.2"
+    "jwks-rsa": "^2.0.2",
+    "redis": "^3.0.2"
   }
 }
