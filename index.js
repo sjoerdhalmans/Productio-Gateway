@@ -20,15 +20,15 @@ app.use(cors());
 
 // configures the auth0 connection
 var jwtCheck = jwt({
-      secret: jwks.expressJwtSecret({
-          cache: true,
-          rateLimit: true,
-          jwksRequestsPerMinute: 5,
-          jwksUri: 'https://deathrun.auth0.com/.well-known/jwks.json'
-    }),
-    audience: 'https://productiogateway',
-    issuer: 'https://deathrun.auth0.com/',
-    algorithms: ['RS256']
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://deathrun.auth0.com/.well-known/jwks.json'
+  }),
+  audience: 'https://productiogateway',
+  issuer: 'https://deathrun.auth0.com/',
+  algorithms: ['RS256']
 });
 
 // Changes where the authenticator looks for scopes
@@ -39,27 +39,27 @@ var options = {
 // Configures redis client
 let
   /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
-  client    = redis.createClient({
-    port      : 6379,               // replace with your port
-    host      : '127.0.0.1',        // replace with your hostanme or IP address
+  client = redis.createClient({
+    port: 6379,               // replace with your port
+    host: '127.0.0.1',        // replace with your hostanme or IP address
   });
 
 app.use(jwtCheck);
 app.use(router);
 
 app.get('/', (req, res) => {
-    res.send("Simple API Gateway")
+  res.send("Simple API Gateway")
 })
 
-app.get('/ping', (req, res) => {
-  client.send_command('ping', redis.print);
-})
+app.post('/ping',
+  jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('ping_me', 'test', redis.print));
+  })
 
-router.get('/tests',
-  jwtAuthz(['read:feed'], options),
-  function (req, res) { 
-    console.log(req)
-    res.send('well') });
+app.post('/secureping',
+  jwtAuthz(['read:feeds'], options), (req, res) => {
+    res.send(client.publish('ping_me', 'test', redis.print));
+  })
 
 console.log('gateway is operational at ' + port)
 
