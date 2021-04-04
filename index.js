@@ -4,7 +4,7 @@ var app = express();
 var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
 
-const router = require('./routers/feedService');
+const router = require('./routers/router.js');
 var bodyParser = require('body-parser');
 var jwtAuthz = require('express-jwt-authz');
 app.use(bodyParser.json())
@@ -51,14 +51,9 @@ app.get('/', (req, res) => {
   res.send("Simple API Gateway")
 })
 
-app.post('/ping',
+app.post('/addUser',
   jwtAuthz(['read:feed'], options), (req, res) => {
-    res.send(client.publish('ping_me', 'test', redis.print));
-  })
-
-app.post('/secureping',
-  jwtAuthz(['read:feeds'], options), (req, res) => {
-    res.send(client.publish('ping_me', 'test', redis.print));
+    res.send(client.publish('add_user', req, redis.print));
   })
 
 console.log('gateway is operational at ' + port)
