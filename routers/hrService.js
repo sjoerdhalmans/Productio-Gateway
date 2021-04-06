@@ -19,4 +19,9 @@ let
         res.send(client.publish('update_password', JSON.stringify(req.body), redis.print));
     })
 
+    router.patch('/updateuser', jwtAuthz(['read:feed'], options), (req, res) => {
+        res.send(client.publish('update_user', JSON.stringify(req.body), redis.print));
+    })
+
+
 module.exports = router
