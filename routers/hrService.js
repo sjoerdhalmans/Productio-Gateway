@@ -15,13 +15,21 @@ let
         host: '127.0.0.1',        // replace with your hostanme or IP address
     });
 
-    router.post('/updatepassword', jwtAuthz(['read:feed'], options), (req, res) => {
-        res.send(client.publish('update_password', JSON.stringify(req.body), redis.print));
-    })
+router.post('/updatepassword', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('update_password', JSON.stringify(req.body), redis.print));
+})
 
-    router.patch('/updateuser', jwtAuthz(['read:feed'], options), (req, res) => {
-        res.send(client.publish('update_user', JSON.stringify(req.body), redis.print));
-    })
+router.patch('/updateuser', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('update_user', JSON.stringify(req.body), redis.print));
+})
+
+router.post('/assignroles', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('assign_roles', JSON.stringify(req.body), redis.print));
+})
+
+router.delete('/removeroles', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('remove_roles', JSON.stringify(req.body), redis.print));
+})
 
 
 module.exports = router
