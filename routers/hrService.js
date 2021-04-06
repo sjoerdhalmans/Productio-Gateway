@@ -15,8 +15,8 @@ let
         host: '127.0.0.1',        // replace with your hostanme or IP address
     });
 
-router.get('/secureping', jwtAuthz(['read:feeds'], options), (req, res) => {
-    res.send(client.publish('ping_me', 'test', redis.print));
-})
+    router.post('/updatepassword', jwtAuthz(['read:feed'], options), (req, res) => {
+        res.send(client.publish('update_password', JSON.stringify(req.body), redis.print));
+    })
 
 module.exports = router
