@@ -32,12 +32,14 @@ router.delete('/removeroles', jwtAuthz(['read:feed'], options), (req, res) => {
     res.send(client.publish('remove_roles', JSON.stringify(req.body), redis.print));
 })
 
-router.get('/getusers', jwtAuthz(['read:feed'], options), (req, res) => {
+router.get('/getusers', jwtAuthz(['read:feed'], options), async(req, res) => {
     console.log('hello')
-    axios.get('http://localhost:8085/getall').then(res => {
-        console.log(res.data);
-        return res.data;
+    var response
+
+    await axios.get('http://localhost:8085/getall').then(res => {
+        response = res.data;
     })
+    res.send(response);
 })
 
 

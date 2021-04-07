@@ -6,7 +6,6 @@ var jwks = require('jwks-rsa');
 
 const router = require('./routers/router.js');
 var bodyParser = require('body-parser');
-var jwtAuthz = require('express-jwt-authz');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 var cors = require('cors');
@@ -50,11 +49,6 @@ app.use(router);
 app.get('/', (req, res) => {
   res.send("Simple API Gateway")
 })
-
-app.post('/addUser',
-  jwtAuthz(['read:feed'], options), (req, res) => {
-    res.send(client.publish('add_user', req, redis.print));
-  })
 
 console.log('gateway is operational at ' + port)
 
