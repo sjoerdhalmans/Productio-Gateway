@@ -1,3 +1,4 @@
+const { default: axios } = require('axios');
 var express = require('express');
 var router = express.Router()
 var jwtAuthz = require('express-jwt-authz');
@@ -29,6 +30,14 @@ router.post('/assignroles', jwtAuthz(['read:feed'], options), (req, res) => {
 
 router.delete('/removeroles', jwtAuthz(['read:feed'], options), (req, res) => {
     res.send(client.publish('remove_roles', JSON.stringify(req.body), redis.print));
+})
+
+router.get('/getusers', jwtAuthz(['read:feed'], options), (req, res) => {
+    console.log('hello')
+    axios.get('http://localhost:8085/getall').then(res => {
+        console.log(res.data);
+        return res.data;
+    })
 })
 
 
