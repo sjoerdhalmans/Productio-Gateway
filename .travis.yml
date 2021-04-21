@@ -1,0 +1,58 @@
+language: node_js
+
+services:
+    - 'docker'
+
+node_js:
+  - 14.15.0
+
+  
+cache:
+    directories:
+        - "node_modules"
+
+before_install:
+    - set -e
+    # Configure environment so changes are picked up when the Docker daemon is restarted after upgrading
+    - echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json
+    - export DOCKER_CLI_EXPERIMENTAL=enabled
+    - sudo rm -rf /var/lib/apt/lists/*
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+    - sudo apt-get update
+    - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+    - mkdir -vp ~/.docker/cli-plugins/
+    - curl --silent -L "https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+    - chmod a+x ~/.docker/cli-plugins/docker-buildx
+
+after_success:
+    - sudo apt install -y qemu-user-static binfmt-support
+    - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    - docker login -u "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD"
+    - docker buildx create --name sofia
+    - docker buildx use sofia
+    - docker buildx inspect --bootstrap
+    - docker buildx build --platform linux/arm/v7 -t hr . --load
+    - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+    - chmod +x send.sh
+    - ./send.sh success $WEBHOOK_URL
+    - docker images
+
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL
+
+before_deploy:
+    - docker images
+    - docker buildx version
+    - docker login -u "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD" docker.io ;
+    - docker tag hr $DOCKER_USERNAME/hr:latest
+
+deploy:
+    provider: script
+    script: docker push $DOCKER_USERNAME/hr:latest ;
+
+notifications:
+    email: false
+

@@ -52,6 +52,7 @@ app.get('/', (req, res) => {
 
 console.log('gateway is operational at ' + port)
 
+//starts app
 app.listen(port);
 
 module.exports = { jwt }
