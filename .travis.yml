@@ -32,7 +32,7 @@ after_success:
     - docker buildx create --name sofia
     - docker buildx use sofia
     - docker buildx inspect --bootstrap
-    - docker buildx build --platform linux/arm/v7 -t hr . --load
+    - docker buildx build --platform linux/arm/v7 -t gateway . --load
     - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
     - chmod +x send.sh
     - ./send.sh success $WEBHOOK_URL
@@ -47,11 +47,11 @@ before_deploy:
     - docker images
     - docker buildx version
     - docker login -u "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD" docker.io ;
-    - docker tag hr $DOCKER_USERNAME/hr:latest
+    - docker tag gateway $DOCKER_USERNAME/gateway:latest
 
 deploy:
     provider: script
-    script: docker push $DOCKER_USERNAME/hr:latest ;
+    script: docker push $DOCKER_USERNAME/gateway:latest ;
 
 notifications:
     email: false
