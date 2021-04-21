@@ -1,4 +1,4 @@
-FROM node:14 AS hr
+FROM node:14 AS gateway
 WORKDIR /app
 COPY ./package.json ./
 RUN npm install
@@ -8,6 +8,6 @@ RUN npm run build
 
 FROM node:10-alpine
 WORKDIR /app
-COPY --from=hr /app ./
+COPY --from=gateway /app ./
 CMD ["npm", "run", "start:prod"]
-EXPOSE 3302
+EXPOSE 3005
