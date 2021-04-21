@@ -26,6 +26,16 @@ router.get('/getreceipts', jwtAuthz(['read:feed'], options), async (req, res) =>
     res.send(response);
 })
 
+router.get('/getmaterials', jwtAuthz(['read:feed'], options), async (req, res) => {
+    var response
+
+    await axios.get('http://localhost:8086/api/getAllMaterials').then(res => {
+        response = res.data;
+    })
+
+    res.send(response);
+})
+
 router.get('/getorders', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
 

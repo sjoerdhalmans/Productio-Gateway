@@ -33,6 +33,7 @@ router.delete('/removeroles', jwtAuthz(['read:feed'], options), (req, res) => {
 })
 
 router.get('/getusers', jwtAuthz(['read:feed'], options), async (req, res) => {
+    console.log(req.user)
     var response
 
     await axios.get('http://localhost:8085/getall').then(res => {
