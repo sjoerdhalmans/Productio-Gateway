@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 })
 
 //adds startup notification
-console.log('gateway is operational at ' + port)
+console.log('gateway is operationald at ' + port)
 
 //starts app
 app.listen(port);
