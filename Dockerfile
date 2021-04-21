@@ -10,4 +10,4 @@ FROM node:10-alpine
 WORKDIR /app
 COPY --from=gateway /app ./
 CMD ["npm", "run", "start:prod"]
-EXPOSE 3005
+EXPOSE 3000
