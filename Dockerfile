@@ -14,5 +14,5 @@ RUN sh /demo-app/install-redis.sh
 FROM node:10-alpine
 WORKDIR /app
 COPY --from=gateway /app ./
-CMD CMD ["sh", "-c", "redis-server > /dev/null 2>&1 & node index.js"]
+CMD ["sh", "-c", "redis-server > /dev/null 2>&1 & node server.js"]
 EXPOSE 3000
