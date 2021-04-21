@@ -12,7 +12,6 @@ let
     /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
     client = redis.createClient({
         port: 6379,               // replace with your port
-        host: '127.0.0.1',        // replace with your hostanme or IP address
     });
 
 router.get('/secureping', jwtAuthz(['read:feeds'], options), (req, res) => {
