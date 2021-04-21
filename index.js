@@ -38,9 +38,7 @@ var options = {
 // Configures redis client
 let
   /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
-  client = redis.createClient({
-    port: 6379,               // replace with your port
-  });
+  client = redis.createClient({port: 6379});
 
 app.use(jwtCheck);
 app.use(router);
@@ -50,7 +48,7 @@ app.get('/', (req, res) => {
 })
 
 //adds startup notification
-console.log('gateway is operationald at ' + port)
+console.log('gateway is operational at ' + port)
 
 //starts app
 app.listen(port);
