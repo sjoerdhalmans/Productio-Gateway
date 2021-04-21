@@ -50,6 +50,7 @@ app.get('/', (req, res) => {
   res.send("Simple API Gateway")
 })
 
+//adds startup notification
 console.log('gateway is operational at ' + port)
 
 //starts app
