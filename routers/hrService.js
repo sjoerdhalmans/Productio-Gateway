@@ -11,9 +11,7 @@ var options = {
 // Configures redis client
 let
     /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
-    client = redis.createClient({
-        port: 6379,               // replace with your port
-    });
+    client = redis.createClient({host: "172.17.0.2"});
 
 router.post('/updatepassword', jwtAuthz(['read:feed'], options), (req, res) => {
     res.send(client.publish('update_password', JSON.stringify(req.body), redis.print));

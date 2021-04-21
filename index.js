@@ -38,7 +38,7 @@ var options = {
 // Configures redis client
 let
   /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
-  client = redis.createClient({port: 6379});
+  client = redis.createClient({host: "172.17.0.2"});
 
 app.use(jwtCheck);
 app.use(router);
