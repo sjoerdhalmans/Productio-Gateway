@@ -33,7 +33,7 @@ router.get('/getusers', jwtAuthz(['read:feed'], options), async (req, res) => {
     console.log(req.user)
     var response
 
-    await axios.get('http://localhost:8085/getall').then(res => {
+    await axios.get('http://hr:8085/getall').then(res => {
         response = res.data;
     })
     res.send(response);
