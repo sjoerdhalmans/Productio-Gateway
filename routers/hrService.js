@@ -33,7 +33,7 @@ router.get('/getusers', jwtAuthz(['read:feed'], options), async (req, res) => {
     console.log(req.user)
     var response
 
-    await axios.get('http://hr:8085/getall').then(res => {
+    await axios.get('http://hr/getall').then(res => {
         response = res.data;
     })
     res.send(response);
@@ -42,7 +42,7 @@ router.get('/getusers', jwtAuthz(['read:feed'], options), async (req, res) => {
 router.get('/getuserroles/:id', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
 
-    await axios.get('http://hr:8085/userroles/' + req.params.id).then(res => {
+    await axios.get('http://hr/userroles/' + req.params.id).then(res => {
         response = res.data;
     })
 
@@ -52,7 +52,7 @@ router.get('/getuserroles/:id', jwtAuthz(['read:feed'], options), async (req, re
 router.get('/getallroles', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
 
-    await axios.get('http://hr:8085/roles').then(res => {
+    await axios.get('http://hr/roles').then(res => {
         response = res.data;
     })
 
