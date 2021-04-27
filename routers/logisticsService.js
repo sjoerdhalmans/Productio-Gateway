@@ -11,7 +11,7 @@ var options = {
 // Configures redis client
 let
     /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
-    client = redis.createClient({host: 'redis'});
+    client = redis.createClient({host: '127.0.0.1'});
 
 router.get('/getreceipts', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
