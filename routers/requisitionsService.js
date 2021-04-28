@@ -20,4 +20,8 @@ router.delete('/deleterequisition', jwtAuthz(['read:feed'], options), (req, res)
     res.send(client.publish('deleteRequisition', JSON.stringify(req.body), redis.print));
 })
 
+router.post('/addinvitem', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('addInvItem', JSON.stringify(req.body), redis.print));
+})
+
 module.exports = router
