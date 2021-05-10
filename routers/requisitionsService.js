@@ -24,4 +24,34 @@ router.post('/addinvitem', jwtAuthz(['read:feed'], options), (req, res) => {
     res.send(client.publish('addInvItem', JSON.stringify(req.body), redis.print));
 })
 
+router.get('/getstoredmaterials', jwtAuthz(['read:feed'], options), async (req, res) => {
+    var response
+
+    await axios.get('http://localhost:3500/getStoredMaterials').then(res => {
+        response = res.data;
+    })
+
+    res.send(response);
+})
+
+router.get('/getallrequisitions', jwtAuthz(['read:feed'], options), async (req, res) => {
+    var response
+
+    await axios.get('http://localhost:3500/getAllRequisitions').then(res => {
+        response = res.data;
+    })
+
+    res.send(response);
+})
+
+router.get('/getallstoreditems', jwtAuthz(['read:feed'], options), async (req, res) => {
+    var response
+
+    await axios.get('http://localhost:3500/getAllStoredItems').then(res => {
+        response = res.data;
+    })
+
+    res.send(response);
+})
+
 module.exports = router
