@@ -56,8 +56,8 @@ router.put('/updateorder', jwtAuthz(['read:feed'], options), (req, res) => {
     res.send(client.publish('updateOrder', JSON.stringify(req.body), redis.print));
 })
 
-router.delete('/deleteorder', jwtAuthz(['read:feed'], options), (req, res) => {
-    res.send(client.publish('deleteOrder', JSON.stringify(req.body), redis.print));
+router.delete('/deleteorder/:id', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('deleteOrder', req.params.id, redis.print));
 })
 
 module.exports = router
