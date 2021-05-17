@@ -9,12 +9,15 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 var cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const axios = require("axios");
 const redis = require("redis");
 
 //defines application port and allows CORS
-var port = 3000
+var port = process.env.PORT
+console.log(process.env.PORT)
 app.use(cors());
 
 // configures the auth0 connection

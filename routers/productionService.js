@@ -14,3 +14,34 @@ let
 
     client = redis.createClient({ host: '127.0.0.1' });
 
+router.get('/getitems', jwtAuthz(['read:feed'], options), async (req, res) => {
+    var response
+
+    await axios.get(baseurl + '/api/getAllItems').then(res => {
+        response = res.data;
+    })
+
+    res.send(response);
+})
+
+router.get('/getblueprints', jwtAuthz(['read:feed'], options), async (req, res) => {
+    var response
+
+    await axios.get(baseurl + '/api/getAllBlueprints').then(res => {
+        response = res.data;
+    })
+
+    res.send(response);
+})
+
+router.get('/getproductionlines', jwtAuthz(['read:feed'], options), async (req, res) => {
+    var response
+
+    await axios.get(baseurl + '/api/getAllProductionLines').then(res => {
+        response = res.data;
+    })
+
+    res.send(response);
+})
+
+module.exports = router
