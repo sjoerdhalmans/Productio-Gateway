@@ -8,6 +8,8 @@ var options = {
     customScopeKey: 'permissions'
 };
 
+const baseurl = 'http://localhost:8085'
+
 // Configures redis client
 let
     /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
@@ -33,7 +35,7 @@ router.get('/getusers', jwtAuthz(['read:feed'], options), async (req, res) => {
     console.log(req.user)
     var response
 
-    await axios.get('http://localhost:8085/getall').then(res => {
+    await axios.get(baseurl + '/getall').then(res => {
         response = res.data;
     })
     res.send(response);
@@ -42,7 +44,7 @@ router.get('/getusers', jwtAuthz(['read:feed'], options), async (req, res) => {
 router.get('/getuserroles/:id', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
 
-    await axios.get('http://localhost:8085/userroles/' + req.params.id).then(res => {
+    await axios.get(baseurl + '/userroles/' + req.params.id).then(res => {
         response = res.data;
     })
 
@@ -52,7 +54,7 @@ router.get('/getuserroles/:id', jwtAuthz(['read:feed'], options), async (req, re
 router.get('/getallroles', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
 
-    await axios.get('http://localhost:8085/roles').then(res => {
+    await axios.get(baseurl + '/roles').then(res => {
         response = res.data;
     })
 

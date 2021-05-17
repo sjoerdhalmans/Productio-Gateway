@@ -8,6 +8,8 @@ var options = {
     customScopeKey: 'permissions'
 };
 
+const baseurl = 'http://localhost:9955'
+
 let
 
     client = redis.createClient({ host: '127.0.0.1' });

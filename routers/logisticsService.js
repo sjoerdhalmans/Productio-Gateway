@@ -8,6 +8,8 @@ var options = {
     customScopeKey: 'permissions'
 };
 
+const baseurl = 'http://localhost:8086'
+
 // Configures redis client
 let
     /* Values are hard-coded for this example, it's usually best to bring these in via file or environment variable for production */
@@ -16,7 +18,7 @@ let
 router.get('/getreceipts', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
 
-    await axios.get('http://localhost:8086/api/getAllReceipts').then(res => {
+    await axios.get(baseurl + '/api/getAllReceipts').then(res => {
         response = res.data;
     })
 
@@ -26,7 +28,7 @@ router.get('/getreceipts', jwtAuthz(['read:feed'], options), async (req, res) =>
 router.get('/getmaterials', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
 
-    await axios.get('http://localhost:8086/api/getAllMaterials').then(res => {
+    await axios.get(baseurl + '/api/getAllMaterials').then(res => {
         response = res.data;
     })
 
@@ -36,7 +38,7 @@ router.get('/getmaterials', jwtAuthz(['read:feed'], options), async (req, res) =
 router.get('/getorders', jwtAuthz(['read:feed'], options), async (req, res) => {
     var response
 
-    await axios.get('http://localhost:8086/api/getAllOrders').then(res => {
+    await axios.get(baseurl + '/api/getAllOrders').then(res => {
         response = res.data;
     })
 
