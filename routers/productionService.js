@@ -44,4 +44,20 @@ router.get('/getproductionlines', jwtAuthz(['read:feed'], options), async (req, 
     res.send(response);
 })
 
+router.post('/createitem', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('createItem', JSON.stringify(req.body), redis.print));
+})
+
+router.post('/createblueprint', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('createBlueprint', JSON.stringify(req.body), redis.print));
+})
+
+router.post('/createproductionline', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('createProductionLine', JSON.stringify(req.body), redis.print));
+})
+
+router.put('/updateproductionline', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('updateProductionLine', JSON.stringify(req.body), redis.print));
+})
+
 module.exports = router
