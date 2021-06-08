@@ -59,5 +59,9 @@ router.post('/createproductionline', jwtAuthz(['read:feed'], options), (req, res
 router.put('/updateproductionline', jwtAuthz(['read:feed'], options), (req, res) => {
     res.send(client.publish('updateProductionLine', JSON.stringify(req.body), redis.print));
 })
-//test
+
+router.delete('/deleteproductionline/:id', jwtAuthz(['read:feed'], options), (req, res) => {
+    res.send(client.publish('deleteProductionLine', req.params.id, redis.print));
+})
+
 module.exports = router
